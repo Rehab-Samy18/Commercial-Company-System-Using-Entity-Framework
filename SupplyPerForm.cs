@@ -11,7 +11,9 @@ using System.Windows.Forms;
 namespace EFProject
 {
     public partial class SupplyPerForm : Form
-    {
+    {   /// <summary>
+    /// ///////////
+    /// </summary>
         public SupplyPerForm()
         {
             InitializeComponent();
