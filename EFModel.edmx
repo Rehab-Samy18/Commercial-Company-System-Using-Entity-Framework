@@ -1,0 +1,975 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EF_FinalProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="int" Nullable="false" />
+          <Property Name="C_Email" Type="varchar" MaxLength="50" />
+          <Property Name="C_Name" Type="varchar" MaxLength="20" />
+          <Property Name="C_Phone" Type="int" />
+          <Property Name="C_Mob" Type="int" />
+          <Property Name="C_Fax" Type="int" />
+          <Property Name="C_Website" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Exchange_Permission">
+          <Key>
+            <PropertyRef Name="EP_ID" />
+            <PropertyRef Name="Prod_ID" />
+          </Key>
+          <Property Name="EP_ID" Type="int" Nullable="false" />
+          <Property Name="Prod_ID" Type="int" Nullable="false" />
+          <Property Name="C_ID" Type="int" />
+          <Property Name="WH_Name" Type="varchar" MaxLength="20" />
+          <Property Name="EP_Date" Type="date" />
+        </EntityType>
+        <EntityType Name="Exchange_Quantity">
+          <Key>
+            <PropertyRef Name="EP_ID" />
+            <PropertyRef Name="Prod_ID" />
+            <PropertyRef Name="Exchange_Quantity" />
+          </Key>
+          <Property Name="EP_ID" Type="int" Nullable="false" />
+          <Property Name="Prod_ID" Type="int" Nullable="false" />
+          <Property Name="Exchange_Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Prod_ID" />
+          </Key>
+          <Property Name="Prod_ID" Type="int" Nullable="false" />
+          <Property Name="Prod_Name" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Product_Measure">
+          <Key>
+            <PropertyRef Name="Prod_ID" />
+            <PropertyRef Name="Measure_Unit" />
+          </Key>
+          <Property Name="Prod_ID" Type="int" Nullable="false" />
+          <Property Name="Measure_Unit" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="S_ID" />
+          </Key>
+          <Property Name="S_ID" Type="int" Nullable="false" />
+          <Property Name="S_Name" Type="varchar" MaxLength="20" />
+          <Property Name="S_Email" Type="varchar" MaxLength="50" />
+          <Property Name="S_Phone" Type="int" />
+          <Property Name="S_Mob" Type="int" />
+          <Property Name="S_Fax" Type="int" />
+          <Property Name="S_Website" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Supply_Permission">
+          <Key>
+            <PropertyRef Name="SP_ID" />
+            <PropertyRef Name="Prod_ID" />
+          </Key>
+          <Property Name="SP_ID" Type="int" Nullable="false" />
+          <Property Name="Prod_ID" Type="int" Nullable="false" />
+          <Property Name="S_ID" Type="int" />
+          <Property Name="WH_Name" Type="varchar" MaxLength="20" />
+          <Property Name="SP_Date" Type="date" />
+        </EntityType>
+        <EntityType Name="Supply_Quantity">
+          <Key>
+            <PropertyRef Name="SP_ID" />
+            <PropertyRef Name="Prod_ID" />
+            <PropertyRef Name="Supply_Quantity" />
+          </Key>
+          <Property Name="SP_ID" Type="int" Nullable="false" />
+          <Property Name="Prod_ID" Type="int" Nullable="false" />
+          <Property Name="Supply_Quantity" Type="int" Nullable="false" />
+          <Property Name="Prod_ProdDate" Type="date" />
+          <Property Name="Prod_ExpDuration" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WH_Name" />
+          </Key>
+          <Property Name="WH_Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="WH_Address" Type="varchar" MaxLength="50" />
+          <Property Name="WH_Manager" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="c1">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product_Measure" Type="Self.Product_Measure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Product_Measure">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c10">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Supply_Quantity" Type="Self.Supply_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Supply_Quantity">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c12">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Exchange_Permission" Type="Self.Exchange_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Exchange_Permission">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c13">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Exchange_Permission" Type="Self.Exchange_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="Exchange_Permission">
+              <PropertyRef Name="C_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c14">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Exchange_Permission" Type="Self.Exchange_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="Exchange_Permission">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c16">
+          <End Role="Exchange_Permission" Type="Self.Exchange_Permission" Multiplicity="1" />
+          <End Role="Exchange_Quantity" Type="Self.Exchange_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exchange_Permission">
+              <PropertyRef Name="EP_ID" />
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Exchange_Quantity">
+              <PropertyRef Name="EP_ID" />
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c17">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Exchange_Quantity" Type="Self.Exchange_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Exchange_Quantity">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c3">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Supply_Permission" Type="Self.Supply_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Supply_Permission">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c4">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Supply_Permission" Type="Self.Supply_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="S_ID" />
+            </Principal>
+            <Dependent Role="Supply_Permission">
+              <PropertyRef Name="S_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c5">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Supply_Permission" Type="Self.Supply_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="Supply_Permission">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c9">
+          <End Role="Supply_Permission" Type="Self.Supply_Permission" Multiplicity="1" />
+          <End Role="Supply_Quantity" Type="Self.Supply_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supply_Permission">
+              <PropertyRef Name="SP_ID" />
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Supply_Quantity">
+              <PropertyRef Name="SP_ID" />
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="SelectClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SelectExchangePermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SelectProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SelectSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SelectSupplyPermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SelectWarehouse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="EF_FinalProjectModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exchange_Permission" EntityType="Self.Exchange_Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exchange_Quantity" EntityType="Self.Exchange_Quantity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Measure" EntityType="Self.Product_Measure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supply_Permission" EntityType="Self.Supply_Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supply_Quantity" EntityType="Self.Supply_Quantity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="c1" Association="Self.c1">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Measure" EntitySet="Product_Measure" />
+          </AssociationSet>
+          <AssociationSet Name="c10" Association="Self.c10">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Supply_Quantity" EntitySet="Supply_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c12" Association="Self.c12">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Exchange_Permission" EntitySet="Exchange_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c13" Association="Self.c13">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Exchange_Permission" EntitySet="Exchange_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c14" Association="Self.c14">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Exchange_Permission" EntitySet="Exchange_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c16" Association="Self.c16">
+            <End Role="Exchange_Permission" EntitySet="Exchange_Permission" />
+            <End Role="Exchange_Quantity" EntitySet="Exchange_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c17" Association="Self.c17">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Exchange_Quantity" EntitySet="Exchange_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c3" Association="Self.c3">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Supply_Permission" EntitySet="Supply_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c4" Association="Self.c4">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Supply_Permission" EntitySet="Supply_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c5" Association="Self.c5">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Supply_Permission" EntitySet="Supply_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c9" Association="Self.c9">
+            <End Role="Supply_Permission" EntitySet="Supply_Permission" />
+            <End Role="Supply_Quantity" EntitySet="Supply_Quantity" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EF_FinalProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="C_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="C_Phone" Type="Int32" />
+          <Property Name="C_Mob" Type="Int32" />
+          <Property Name="C_Fax" Type="Int32" />
+          <Property Name="C_Website" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Exchange_Permission" Relationship="Self.c13" FromRole="Client" ToRole="Exchange_Permission" />
+        </EntityType>
+        <EntityType Name="Exchange_Permission">
+          <Key>
+            <PropertyRef Name="EP_ID" />
+            <PropertyRef Name="Prod_ID" />
+          </Key>
+          <Property Name="EP_ID" Type="Int32" Nullable="false" />
+          <Property Name="Prod_ID" Type="Int32" Nullable="false" />
+          <Property Name="C_ID" Type="Int32" />
+          <Property Name="WH_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EP_Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Client" Relationship="Self.c13" FromRole="Exchange_Permission" ToRole="Client" />
+          <NavigationProperty Name="Product" Relationship="Self.c12" FromRole="Exchange_Permission" ToRole="Product" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.c14" FromRole="Exchange_Permission" ToRole="Warehouse" />
+          <NavigationProperty Name="Exchange_Quantity" Relationship="Self.c16" FromRole="Exchange_Permission" ToRole="Exchange_Quantity" />
+        </EntityType>
+        <EntityType Name="Exchange_Quantity">
+          <Key>
+            <PropertyRef Name="EP_ID" />
+            <PropertyRef Name="Prod_ID" />
+            <PropertyRef Name="Exchange_Quantity1" />
+          </Key>
+          <Property Name="EP_ID" Type="Int32" Nullable="false" />
+          <Property Name="Prod_ID" Type="Int32" Nullable="false" />
+          <Property Name="Exchange_Quantity1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Exchange_Permission" Relationship="Self.c16" FromRole="Exchange_Quantity" ToRole="Exchange_Permission" />
+          <NavigationProperty Name="Product" Relationship="Self.c17" FromRole="Exchange_Quantity" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Prod_ID" />
+          </Key>
+          <Property Name="Prod_ID" Type="Int32" Nullable="false" />
+          <Property Name="Prod_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Exchange_Permission" Relationship="Self.c12" FromRole="Product" ToRole="Exchange_Permission" />
+          <NavigationProperty Name="Exchange_Quantity" Relationship="Self.c17" FromRole="Product" ToRole="Exchange_Quantity" />
+          <NavigationProperty Name="Product_Measure" Relationship="Self.c1" FromRole="Product" ToRole="Product_Measure" />
+          <NavigationProperty Name="Supply_Quantity" Relationship="Self.c10" FromRole="Product" ToRole="Supply_Quantity" />
+          <NavigationProperty Name="Supply_Permission" Relationship="Self.c3" FromRole="Product" ToRole="Supply_Permission" />
+        </EntityType>
+        <EntityType Name="Product_Measure">
+          <Key>
+            <PropertyRef Name="Prod_ID" />
+            <PropertyRef Name="Measure_Unit" />
+          </Key>
+          <Property Name="Prod_ID" Type="Int32" Nullable="false" />
+          <Property Name="Measure_Unit" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.c1" FromRole="Product_Measure" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="S_ID" />
+          </Key>
+          <Property Name="S_ID" Type="Int32" Nullable="false" />
+          <Property Name="S_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="S_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="S_Phone" Type="Int32" />
+          <Property Name="S_Mob" Type="Int32" />
+          <Property Name="S_Fax" Type="Int32" />
+          <Property Name="S_Website" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Supply_Permission" Relationship="Self.c4" FromRole="Supplier" ToRole="Supply_Permission" />
+        </EntityType>
+        <EntityType Name="Supply_Permission">
+          <Key>
+            <PropertyRef Name="SP_ID" />
+            <PropertyRef Name="Prod_ID" />
+          </Key>
+          <Property Name="SP_ID" Type="Int32" Nullable="false" />
+          <Property Name="Prod_ID" Type="Int32" Nullable="false" />
+          <Property Name="S_ID" Type="Int32" />
+          <Property Name="WH_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SP_Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Product" Relationship="Self.c3" FromRole="Supply_Permission" ToRole="Product" />
+          <NavigationProperty Name="Supplier" Relationship="Self.c4" FromRole="Supply_Permission" ToRole="Supplier" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.c5" FromRole="Supply_Permission" ToRole="Warehouse" />
+          <NavigationProperty Name="Supply_Quantity" Relationship="Self.c9" FromRole="Supply_Permission" ToRole="Supply_Quantity" />
+        </EntityType>
+        <EntityType Name="Supply_Quantity">
+          <Key>
+            <PropertyRef Name="SP_ID" />
+            <PropertyRef Name="Prod_ID" />
+            <PropertyRef Name="Supply_Quantity1" />
+          </Key>
+          <Property Name="SP_ID" Type="Int32" Nullable="false" />
+          <Property Name="Prod_ID" Type="Int32" Nullable="false" />
+          <Property Name="Supply_Quantity1" Type="Int32" Nullable="false" />
+          <Property Name="Prod_ProdDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Product" Relationship="Self.c10" FromRole="Supply_Quantity" ToRole="Product" />
+          <NavigationProperty Name="Supply_Permission" Relationship="Self.c9" FromRole="Supply_Quantity" ToRole="Supply_Permission" />
+          <Property Name="Prod_ExpDuration" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WH_Name" />
+          </Key>
+          <Property Name="WH_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WH_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WH_Manager" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Exchange_Permission" Relationship="Self.c14" FromRole="Warehouse" ToRole="Exchange_Permission" />
+          <NavigationProperty Name="Supply_Permission" Relationship="Self.c5" FromRole="Warehouse" ToRole="Supply_Permission" />
+        </EntityType>
+        <Association Name="c13">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Exchange_Permission" Type="Self.Exchange_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="Exchange_Permission">
+              <PropertyRef Name="C_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c12">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Exchange_Permission" Type="Self.Exchange_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Exchange_Permission">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c14">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Exchange_Permission" Type="Self.Exchange_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="Exchange_Permission">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c16">
+          <End Role="Exchange_Permission" Type="Self.Exchange_Permission" Multiplicity="1" />
+          <End Role="Exchange_Quantity" Type="Self.Exchange_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exchange_Permission">
+              <PropertyRef Name="EP_ID" />
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Exchange_Quantity">
+              <PropertyRef Name="EP_ID" />
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c17">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Exchange_Quantity" Type="Self.Exchange_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Exchange_Quantity">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c1">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product_Measure" Type="Self.Product_Measure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Product_Measure">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c10">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Supply_Quantity" Type="Self.Supply_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Supply_Quantity">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c3">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Supply_Permission" Type="Self.Supply_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Supply_Permission">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c4">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Supply_Permission" Type="Self.Supply_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="S_ID" />
+            </Principal>
+            <Dependent Role="Supply_Permission">
+              <PropertyRef Name="S_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c5">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Supply_Permission" Type="Self.Supply_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="Supply_Permission">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c9">
+          <End Role="Supply_Permission" Type="Self.Supply_Permission" Multiplicity="1" />
+          <End Role="Supply_Quantity" Type="Self.Supply_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supply_Permission">
+              <PropertyRef Name="SP_ID" />
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="Supply_Quantity">
+              <PropertyRef Name="SP_ID" />
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EF_FinalProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Exchange_Permission" EntityType="Self.Exchange_Permission" />
+          <EntitySet Name="Exchange_Quantity" EntityType="Self.Exchange_Quantity" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Product_Measure" EntityType="Self.Product_Measure" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="Supply_Permission" EntityType="Self.Supply_Permission" />
+          <EntitySet Name="Supply_Quantity" EntityType="Self.Supply_Quantity" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
+          <AssociationSet Name="c13" Association="Self.c13">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Exchange_Permission" EntitySet="Exchange_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c12" Association="Self.c12">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Exchange_Permission" EntitySet="Exchange_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c14" Association="Self.c14">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Exchange_Permission" EntitySet="Exchange_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c16" Association="Self.c16">
+            <End Role="Exchange_Permission" EntitySet="Exchange_Permission" />
+            <End Role="Exchange_Quantity" EntitySet="Exchange_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c17" Association="Self.c17">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Exchange_Quantity" EntitySet="Exchange_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c1" Association="Self.c1">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Measure" EntitySet="Product_Measure" />
+          </AssociationSet>
+          <AssociationSet Name="c10" Association="Self.c10">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Supply_Quantity" EntitySet="Supply_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c3" Association="Self.c3">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Supply_Permission" EntitySet="Supply_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c4" Association="Self.c4">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Supply_Permission" EntitySet="Supply_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c5" Association="Self.c5">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Supply_Permission" EntitySet="Supply_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="c9" Association="Self.c9">
+            <End Role="Supply_Permission" EntitySet="Supply_Permission" />
+            <End Role="Supply_Quantity" EntitySet="Supply_Quantity" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(EF_FinalProjectModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(EF_FinalProjectModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="SelectSupplyPermission" ReturnType="Collection(EF_FinalProjectModel.SelectSupplyPermission_Result)" />
+          <FunctionImport Name="SelectWarehouse" ReturnType="Collection(EF_FinalProjectModel.SelectWarehouse_Result)" />
+          <FunctionImport Name="SelectClient" ReturnType="Collection(EF_FinalProjectModel.SelectClient_Result)" />
+          <FunctionImport Name="SelectProduct" ReturnType="Collection(EF_FinalProjectModel.SelectProduct_Result)" />
+          <FunctionImport Name="SelectSupplier" ReturnType="Collection(EF_FinalProjectModel.SelectSupplier_Result)" />
+          <FunctionImport Name="SelectExchangePermission" ReturnType="Collection(EF_FinalProjectModel.SelectExchangePermission_Result)" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SelectSupplyPermission_Result">
+          <Property Type="Int32" Name="SP_ID" Nullable="false" />
+          <Property Type="DateTime" Name="SP_Date" Nullable="true" />
+          <Property Type="String" Name="WH_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Prod_Name" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Supply_Quantity" Nullable="false" />
+          <Property Type="String" Name="S_Name" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="Prod_ProdDate" Nullable="true" />
+          <Property Type="Int32" Name="Prod_ExpDuration" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SelectWarehouse_Result">
+          <Property Type="String" Name="WH_Name" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="WH_Address" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WH_Manager" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SelectClient_Result">
+          <Property Type="Int32" Name="C_ID" Nullable="false" />
+          <Property Type="String" Name="C_Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="C_Name" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="C_Phone" Nullable="true" />
+          <Property Type="Int32" Name="C_Mob" Nullable="true" />
+          <Property Type="Int32" Name="C_Fax" Nullable="true" />
+          <Property Type="String" Name="C_Website" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SelectProduct_Result">
+          <Property Type="Int32" Name="Prod_ID" Nullable="false" />
+          <Property Type="String" Name="Prod_Name" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SelectSupplier_Result">
+          <Property Type="Int32" Name="S_ID" Nullable="false" />
+          <Property Type="String" Name="S_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="S_Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="S_Phone" Nullable="true" />
+          <Property Type="Int32" Name="S_Mob" Nullable="true" />
+          <Property Type="Int32" Name="S_Fax" Nullable="true" />
+          <Property Type="String" Name="S_Website" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SelectExchangePermission_Result">
+          <Property Type="Int32" Name="EP_ID" Nullable="false" />
+          <Property Type="DateTime" Name="EP_Date" Nullable="true" />
+          <Property Type="String" Name="WH_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Prod_Name" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Exchange_Quantity" Nullable="false" />
+          <Property Type="String" Name="C_Name" Nullable="true" MaxLength="20" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EF_FinalProjectModelStoreContainer" CdmEntityContainer="EF_FinalProjectEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="C_ID" ColumnName="C_ID" />
+                <ScalarProperty Name="C_Email" ColumnName="C_Email" />
+                <ScalarProperty Name="C_Name" ColumnName="C_Name" />
+                <ScalarProperty Name="C_Phone" ColumnName="C_Phone" />
+                <ScalarProperty Name="C_Mob" ColumnName="C_Mob" />
+                <ScalarProperty Name="C_Fax" ColumnName="C_Fax" />
+                <ScalarProperty Name="C_Website" ColumnName="C_Website" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exchange_Permission">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.Exchange_Permission">
+              <MappingFragment StoreEntitySet="Exchange_Permission">
+                <ScalarProperty Name="EP_ID" ColumnName="EP_ID" />
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="C_ID" ColumnName="C_ID" />
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="EP_Date" ColumnName="EP_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exchange_Quantity">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.Exchange_Quantity">
+              <MappingFragment StoreEntitySet="Exchange_Quantity">
+                <ScalarProperty Name="EP_ID" ColumnName="EP_ID" />
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Exchange_Quantity1" ColumnName="Exchange_Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Measure">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.Product_Measure">
+              <MappingFragment StoreEntitySet="Product_Measure">
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Measure_Unit" ColumnName="Measure_Unit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="S_ID" ColumnName="S_ID" />
+                <ScalarProperty Name="S_Name" ColumnName="S_Name" />
+                <ScalarProperty Name="S_Email" ColumnName="S_Email" />
+                <ScalarProperty Name="S_Phone" ColumnName="S_Phone" />
+                <ScalarProperty Name="S_Mob" ColumnName="S_Mob" />
+                <ScalarProperty Name="S_Fax" ColumnName="S_Fax" />
+                <ScalarProperty Name="S_Website" ColumnName="S_Website" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supply_Permission">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.Supply_Permission">
+              <MappingFragment StoreEntitySet="Supply_Permission">
+                <ScalarProperty Name="SP_ID" ColumnName="SP_ID" />
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="S_ID" ColumnName="S_ID" />
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="SP_Date" ColumnName="SP_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supply_Quantity">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.Supply_Quantity">
+              <MappingFragment StoreEntitySet="Supply_Quantity">
+                <ScalarProperty Name="Prod_ExpDuration" ColumnName="Prod_ExpDuration" />
+                <ScalarProperty Name="SP_ID" ColumnName="SP_ID" />
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Supply_Quantity1" ColumnName="Supply_Quantity" />
+                <ScalarProperty Name="Prod_ProdDate" ColumnName="Prod_ProdDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="WH_Address" ColumnName="WH_Address" />
+                <ScalarProperty Name="WH_Manager" ColumnName="WH_Manager" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="EF_FinalProjectModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="EF_FinalProjectModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="EF_FinalProjectModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="EF_FinalProjectModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="EF_FinalProjectModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="EF_FinalProjectModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="EF_FinalProjectModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="SelectSupplyPermission" FunctionName="EF_FinalProjectModel.Store.SelectSupplyPermission">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.SelectSupplyPermission_Result">
+                <ScalarProperty Name="SP_ID" ColumnName="SP_ID" />
+                <ScalarProperty Name="SP_Date" ColumnName="SP_Date" />
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
+                <ScalarProperty Name="Supply_Quantity" ColumnName="Supply_Quantity" />
+                <ScalarProperty Name="S_Name" ColumnName="S_Name" />
+                <ScalarProperty Name="Prod_ProdDate" ColumnName="Prod_ProdDate" />
+                <ScalarProperty Name="Prod_ExpDuration" ColumnName="Prod_ExpDuration" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SelectWarehouse" FunctionName="EF_FinalProjectModel.Store.SelectWarehouse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.SelectWarehouse_Result">
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="WH_Address" ColumnName="WH_Address" />
+                <ScalarProperty Name="WH_Manager" ColumnName="WH_Manager" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SelectClient" FunctionName="EF_FinalProjectModel.Store.SelectClient">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.SelectClient_Result">
+                <ScalarProperty Name="C_ID" ColumnName="C_ID" />
+                <ScalarProperty Name="C_Email" ColumnName="C_Email" />
+                <ScalarProperty Name="C_Name" ColumnName="C_Name" />
+                <ScalarProperty Name="C_Phone" ColumnName="C_Phone" />
+                <ScalarProperty Name="C_Mob" ColumnName="C_Mob" />
+                <ScalarProperty Name="C_Fax" ColumnName="C_Fax" />
+                <ScalarProperty Name="C_Website" ColumnName="C_Website" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SelectProduct" FunctionName="EF_FinalProjectModel.Store.SelectProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.SelectProduct_Result">
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SelectSupplier" FunctionName="EF_FinalProjectModel.Store.SelectSupplier">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.SelectSupplier_Result">
+                <ScalarProperty Name="S_ID" ColumnName="S_ID" />
+                <ScalarProperty Name="S_Name" ColumnName="S_Name" />
+                <ScalarProperty Name="S_Email" ColumnName="S_Email" />
+                <ScalarProperty Name="S_Phone" ColumnName="S_Phone" />
+                <ScalarProperty Name="S_Mob" ColumnName="S_Mob" />
+                <ScalarProperty Name="S_Fax" ColumnName="S_Fax" />
+                <ScalarProperty Name="S_Website" ColumnName="S_Website" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SelectExchangePermission" FunctionName="EF_FinalProjectModel.Store.SelectExchangePermission">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.SelectExchangePermission_Result">
+                <ScalarProperty Name="EP_ID" ColumnName="EP_ID" />
+                <ScalarProperty Name="EP_Date" ColumnName="EP_Date" />
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
+                <ScalarProperty Name="Exchange_Quantity" ColumnName="Exchange_Quantity" />
+                <ScalarProperty Name="C_Name" ColumnName="C_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
