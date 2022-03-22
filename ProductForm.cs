@@ -22,8 +22,8 @@ namespace EFProject
         {
             EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
             Product PR = new Product();
-
-            if (textBox1.Text != "" && textBox2.Text != "")
+            Product_Measure PM = new Product_Measure();
+            if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "")
             {
                 Product FindProduct = Ent.Products.Find(int.Parse(textBox1.Text));
                 if (FindProduct == null)
@@ -32,30 +32,43 @@ namespace EFProject
                     PR.Prod_Name = textBox2.Text;
                     Ent.Products.Add(PR);
                     Ent.SaveChanges();
+                }
+               
+                Product_Measure ProdMes = Ent.Product_Measure.Find(int.Parse(textBox1.Text), textBox3.Text);
+                if (ProdMes == null)
+                {
+                    PM.Prod_ID = int.Parse(textBox1.Text);
+                    PM.Measure_Unit = textBox3.Text;
+                    Ent.Product_Measure.Add(PM);
+                    Ent.SaveChanges();
                     MessageBox.Show("Product added successfully!");
                 }
-                else
+                if (FindProduct != null && ProdMes != null)
                 {
-                    MessageBox.Show("Product is already existed!");
+                    MessageBox.Show("Product already existed!");
                 }
+                
             }
             else
             {
                 MessageBox.Show("Empty Data");
             }
-            textBox1.Text = textBox2.Text = String.Empty;
+            textBox1.Text = textBox2.Text = textBox3.Text = String.Empty;
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
             EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
             int UpdatedProductId = int.Parse(textBox1.Text);
+            string UpdatedProductMeasure = textBox3.Text;
             Product PR = Ent.Products.Find(UpdatedProductId);
-            if (textBox2.Text != "")
+            Product_Measure PM = Ent.Product_Measure.Find(UpdatedProductId, UpdatedProductMeasure);
+            if (textBox2.Text != "" && textBox3.Text != "")
             {
-                if (PR != null)
+                if (PR != null && PM != null)
                 {
                     PR.Prod_Name = textBox2.Text;
+                    PM.Measure_Unit = textBox3.Text;
                     Ent.SaveChanges();
                     MessageBox.Show("Product updated successfully!");
                 }
@@ -68,21 +81,21 @@ namespace EFProject
             {
                 MessageBox.Show("Empty Data!");
             }
-            textBox1.Text = textBox2.Text = String.Empty;
+            textBox1.Text = textBox2.Text = textBox3.Text = String.Empty;
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
             
             EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
-            dataGridView1.DataSource = Ent.SelectProduct();
-            
+            dataGridView1.DataSource = Ent.SelectAllProduct();
         }
 
         private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["Prod_ID"].Value.ToString();
             textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells["Prod_Name"].Value.ToString();
+            textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["Measure_Unit"].Value.ToString();
         }
     }
 }

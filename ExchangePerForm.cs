@@ -81,8 +81,8 @@ namespace EFProject
                     }
                     else
                     {
-                        Ent.Exchange_Quantity.Add(EQ);
                         Ent.Exchange_Permission.Add(EP);
+                        Ent.Exchange_Quantity.Add(EQ);
                         Ent.SaveChanges();
                         MessageBox.Show("Exchange Permission added successfully!");
                         textBox1.Text = comboBox1.Text = textBox3.Text = comboBox2.Text = comboBox3.Text = textBox6.Text = String.Empty;

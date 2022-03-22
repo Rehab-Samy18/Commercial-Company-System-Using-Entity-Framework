@@ -163,6 +163,9 @@
     <Compile Include="ReportsOptionsForm.Designer.cs">
       <DependentUpon>ReportsOptionsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SelectAllProduct_Result.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SelectClient_Result.cs">
       <DependentUpon>EFModel.tt</DependentUpon>
     </Compile>

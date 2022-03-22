@@ -245,5 +245,10 @@ namespace EFProject
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DisplayTransaction_Result>("DisplayTransaction");
         }
+    
+        public virtual ObjectResult<SelectAllProduct_Result> SelectAllProduct()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SelectAllProduct_Result>("SelectAllProduct");
+        }
     }
 }

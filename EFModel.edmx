@@ -255,6 +255,7 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
         </Association>
         <Function Name="DisplayTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="SelectAllProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SelectClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SelectExchangePermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SelectProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -730,6 +731,7 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
             <Parameter Name="expdur" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DisplayTransaction" ReturnType="Collection(EF_FinalProjectModel.DisplayTransaction_Result)" />
+          <FunctionImport Name="SelectAllProduct" ReturnType="Collection(EF_FinalProjectModel.SelectAllProduct_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -795,6 +797,11 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <Property Type="Int32" Name="Prod_Quantity" Nullable="true" />
           <Property Type="DateTime" Name="Prod_Date" Nullable="true" />
           <Property Type="Int32" Name="Exp_Duration" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SelectAllProduct_Result">
+          <Property Type="Int32" Name="Prod_ID" Nullable="false" />
+          <Property Type="String" Name="Prod_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Measure_Unit" Nullable="false" MaxLength="5" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1010,6 +1017,15 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
                 <ScalarProperty Name="Prod_Quantity" ColumnName="Prod_Quantity" />
                 <ScalarProperty Name="Prod_Date" ColumnName="Prod_Date" />
                 <ScalarProperty Name="Exp_Duration" ColumnName="Exp_Duration" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SelectAllProduct" FunctionName="EF_FinalProjectModel.Store.SelectAllProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.SelectAllProduct_Result">
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
+                <ScalarProperty Name="Measure_Unit" ColumnName="Measure_Unit" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
