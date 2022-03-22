@@ -37,50 +37,56 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(148, 85);
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(30, 33);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(275, 23);
+            this.button1.Size = new System.Drawing.Size(536, 50);
             this.button1.TabIndex = 0;
-            this.button1.Text = "تقرير عن كل مخزن";
+            this.button1.Text = "Report About Each Warehouse";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(148, 124);
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(30, 89);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(275, 23);
+            this.button2.Size = new System.Drawing.Size(536, 58);
             this.button2.TabIndex = 1;
-            this.button2.Text = "تقرير عن كل صنف";
+            this.button2.Text = "Report About Each Product";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(148, 167);
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Location = new System.Drawing.Point(30, 153);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(275, 23);
+            this.button3.Size = new System.Drawing.Size(536, 53);
             this.button3.TabIndex = 2;
-            this.button3.Text = "تقرير عن حركة الأصناف فى فترة معينة ";
+            this.button3.Text = "Report About Products Transaction in Certain Period";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(148, 212);
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(30, 212);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(275, 23);
+            this.button4.Size = new System.Drawing.Size(536, 58);
             this.button4.TabIndex = 3;
-            this.button4.Text = "تقرير عن الأصناف التى مر عليها فترة زمنية فى المخزن";
+            this.button4.Text = "Report about Products which have been in the warehouse for a long time";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.Button4_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(148, 251);
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Location = new System.Drawing.Point(30, 276);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(275, 23);
+            this.button5.Size = new System.Drawing.Size(536, 47);
             this.button5.TabIndex = 4;
-            this.button5.Text = "تقرير عن الإصناف التى قاربت على انتهاء الصلاحية";
+            this.button5.Text = "Report About Products about to be EXPIRED";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.Button5_Click);
             // 
@@ -88,7 +94,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::EFProject.Properties.Resources.bg;
+            this.BackgroundImage = global::EFProject.Properties.Resources._1;
             this.ClientSize = new System.Drawing.Size(578, 354);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);

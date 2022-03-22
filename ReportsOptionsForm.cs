@@ -40,5 +40,11 @@ namespace EFProject
             ExpProductSoonForm EPSF = new ExpProductSoonForm();
             EPSF.Show();
         }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            ProductTransactionReport PTR = new ProductTransactionReport();
+            PTR.Show();
+        }
     }
 }

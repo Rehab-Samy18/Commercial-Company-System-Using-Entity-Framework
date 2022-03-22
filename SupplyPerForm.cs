@@ -162,5 +162,27 @@ namespace EFProject
                 MessageBox.Show("Empty Data!");
             }
         }
+
+        private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string ProdName = dataGridView1.Rows[e.RowIndex].Cells["Prod_Name"].Value.ToString();
+            string SupplyName = dataGridView1.Rows[e.RowIndex].Cells["S_Name"].Value.ToString();
+            EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
+            
+            Product Prod = (from P in Ent.Products
+                             where P.Prod_Name == ProdName
+                             select P).FirstOrDefault();
+            Supplier sup = (from S in Ent.Suppliers
+                            where S.S_Name == SupplyName
+                            select S).FirstOrDefault();
+            textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["SP_ID"].Value.ToString();
+            comboBox1.Text = Prod.Prod_ID.ToString();
+            textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["Supply_Quantity"].Value.ToString();
+            comboBox2.Text = sup.S_ID.ToString();
+            comboBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["WH_Name"].Value.ToString();
+            textBox6.Text = dataGridView1.Rows[e.RowIndex].Cells["SP_Date"].Value.ToString();
+            textBox7.Text = dataGridView1.Rows[e.RowIndex].Cells["Prod_ProdDate"].Value.ToString();
+            textBox8.Text = dataGridView1.Rows[e.RowIndex].Cells["Prod_ExpDuration"].Value.ToString();
+        }
     }
 }

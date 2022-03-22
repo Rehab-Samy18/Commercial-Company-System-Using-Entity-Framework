@@ -50,7 +50,8 @@ namespace EFProject
                 Exchange_Permission FindExchangePer = Ent.Exchange_Permission.Find(int.Parse(textBox1.Text), int.Parse(comboBox1.Text));
                 if (FindExchangePer == null)
                 {
-                    EP.EP_ID = EQ.EP_ID = int.Parse(textBox1.Text);
+                    EP.EP_ID = int.Parse(textBox1.Text);
+                    EQ.EP_ID = int.Parse(textBox1.Text);
                     EP.Prod_ID = EQ.Prod_ID = int.Parse(comboBox1.Text);
                     EQ.Exchange_Quantity1 = int.Parse(textBox3.Text);
                     EP.C_ID = int.Parse(comboBox2.Text);
@@ -80,8 +81,8 @@ namespace EFProject
                     }
                     else
                     {
-                        Ent.Exchange_Permission.Add(EP);
                         Ent.Exchange_Quantity.Add(EQ);
+                        Ent.Exchange_Permission.Add(EP);
                         Ent.SaveChanges();
                         MessageBox.Show("Exchange Permission added successfully!");
                         textBox1.Text = comboBox1.Text = textBox3.Text = comboBox2.Text = comboBox3.Text = textBox6.Text = String.Empty;
@@ -157,6 +158,25 @@ namespace EFProject
                 MessageBox.Show("Empty Data!");
             }
         }
-    
+
+        private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string ProdName = dataGridView1.Rows[e.RowIndex].Cells["Prod_Name"].Value.ToString();
+            string SupplyName = dataGridView1.Rows[e.RowIndex].Cells["C_Name"].Value.ToString();
+            EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
+
+            Product Prod = (from P in Ent.Products
+                            where P.Prod_Name == ProdName
+                            select P).FirstOrDefault();
+            Client CL = (from C in Ent.Clients
+                            where C.C_Name == SupplyName
+                            select C).FirstOrDefault();
+            textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["EP_ID"].Value.ToString();
+            comboBox1.Text = Prod.Prod_ID.ToString();
+            textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["Exchange_Quantity"].Value.ToString();
+            comboBox2.Text = CL.C_ID.ToString();
+            comboBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["WH_Name"].Value.ToString();
+            textBox6.Text = dataGridView1.Rows[e.RowIndex].Cells["EP_Date"].Value.ToString();
+        }
     }
 }

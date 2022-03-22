@@ -17,27 +17,6 @@ namespace EFProject
             InitializeComponent();
         }
 
-        private void WarehouseForm_Load(object sender, EventArgs e)
-        {
-            EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
-            foreach (Warehouse W in Ent.Warehouses)
-            {
-                comboBox1.Items.Add(W.WH_Name.ToString());
-                
-            }
-        }
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string Name = comboBox1.Text;
-            EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
-            Warehouse WH = (from W in Ent.Warehouses
-                            where W.WH_Name == Name
-                            select W).First();
-            textBox1.Text = WH.WH_Name;
-            textBox2.Text = WH.WH_Address;
-            textBox3.Text = WH.WH_Manager;
-        }
-
         private void Button1_Click(object sender, EventArgs e)
         {
             EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
@@ -52,7 +31,6 @@ namespace EFProject
                     WH.WH_Address = textBox2.Text;
                     WH.WH_Manager = textBox3.Text;
                     Ent.Warehouses.Add(WH);
-                    comboBox1.Items.Add(WH.WH_Name);
                     Ent.SaveChanges();
                     MessageBox.Show("Warehouse added successfully!");
                 }
@@ -100,6 +78,13 @@ namespace EFProject
             EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
             dataGridView1.DataSource = Ent.SelectWarehouse();
             
+        }
+
+        private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["WH_Name"].Value.ToString();
+            textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells["WH_Address"].Value.ToString();
+            textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["WH_Manager"].Value.ToString();
         }
     }
 }

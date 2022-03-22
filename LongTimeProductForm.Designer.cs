@@ -33,19 +33,19 @@
             // 
             // reportViewer1
             // 
-            this.reportViewer1.Location = new System.Drawing.Point(65, 37);
+            this.reportViewer1.Location = new System.Drawing.Point(32, 12);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Remote;
             this.reportViewer1.ServerReport.BearerToken = null;
             this.reportViewer1.ServerReport.ReportPath = "/ProjectReports/Report3";
-            this.reportViewer1.Size = new System.Drawing.Size(553, 246);
+            this.reportViewer1.Size = new System.Drawing.Size(621, 305);
             this.reportViewer1.TabIndex = 0;
             // 
             // LongTimeProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::EFProject.Properties.Resources.bg;
+            this.BackgroundImage = global::EFProject.Properties.Resources._1;
             this.ClientSize = new System.Drawing.Size(678, 329);
             this.Controls.Add(this.reportViewer1);
             this.Name = "LongTimeProductForm";

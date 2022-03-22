@@ -1,6 +1,6 @@
 ﻿namespace EFProject
 {
-    partial class WHReport
+    partial class ProductTransactionReport
     {
         /// <summary>
         /// Required designer variable.
@@ -33,24 +33,24 @@
             // 
             // reportViewer1
             // 
-            this.reportViewer1.Location = new System.Drawing.Point(25, 12);
+            this.reportViewer1.Location = new System.Drawing.Point(22, 25);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Remote;
             this.reportViewer1.ServerReport.BearerToken = null;
-            this.reportViewer1.ServerReport.ReportPath = "/ProjectReports/Report1";
-            this.reportViewer1.Size = new System.Drawing.Size(685, 402);
+            this.reportViewer1.ServerReport.ReportPath = "/ProjectReports/Report5";
+            this.reportViewer1.Size = new System.Drawing.Size(733, 385);
             this.reportViewer1.TabIndex = 0;
             // 
-            // WHReport
+            // ProductTransactionReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::EFProject.Properties.Resources._1;
-            this.ClientSize = new System.Drawing.Size(751, 426);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.reportViewer1);
-            this.Name = "WHReport";
-            this.Text = "WHReport";
-            this.Load += new System.EventHandler(this.WHReport_Load);
+            this.Name = "ProductTransactionReport";
+            this.Text = "ProductTransactionReport";
+            this.Load += new System.EventHandler(this.ProductTransactionReport_Load);
             this.ResumeLayout(false);
 
         }

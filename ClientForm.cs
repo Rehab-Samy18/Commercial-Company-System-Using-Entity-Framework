@@ -16,32 +16,6 @@ namespace EFProject
         {
             InitializeComponent();
         }
-
-        private void ClientForm_Load(object sender, EventArgs e)
-        {
-            EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
-            foreach (Client C in Ent.Clients)
-            {
-                comboBox1.Items.Add(C.C_ID.ToString());
-            }
-        }
-
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int ID = int.Parse(comboBox1.Text.ToString());
-            EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
-            Client Cl = (from C in Ent.Clients
-                            where C.C_ID == ID
-                            select C).First();
-            textBox1.Text = Cl.C_ID.ToString();
-            textBox2.Text = Cl.C_Name;
-            textBox3.Text = Cl.C_Email;
-            textBox4.Text = Cl.C_Phone.ToString();
-            textBox5.Text = Cl.C_Mob.ToString();
-            textBox6.Text = Cl.C_Fax.ToString();
-            textBox7.Text = Cl.C_Website;
-        }
-
         private void Button1_Click(object sender, EventArgs e)
         {
             EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
@@ -60,7 +34,6 @@ namespace EFProject
                     CL.C_Fax = int.Parse(textBox6.Text);
                     CL.C_Website = textBox7.Text;
                     Ent.Clients.Add(CL);
-                    comboBox1.Items.Add(CL.C_ID);
                     Ent.SaveChanges();
                     MessageBox.Show("Client added successfully!");
                 }
@@ -110,6 +83,17 @@ namespace EFProject
         {
             EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
             dataGridView1.DataSource = Ent.SelectClient();
+        }
+
+        private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["C_ID"].Value.ToString();
+            textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells["C_Name"].Value.ToString();
+            textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["C_Email"].Value.ToString();
+            textBox4.Text = dataGridView1.Rows[e.RowIndex].Cells["C_Phone"].Value.ToString();
+            textBox5.Text = dataGridView1.Rows[e.RowIndex].Cells["C_Mob"].Value.ToString();
+            textBox6.Text = dataGridView1.Rows[e.RowIndex].Cells["C_Fax"].Value.ToString();
+            textBox7.Text = dataGridView1.Rows[e.RowIndex].Cells["C_Website"].Value.ToString();
         }
     }
 }

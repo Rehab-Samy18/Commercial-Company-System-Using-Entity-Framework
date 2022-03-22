@@ -17,30 +17,6 @@ namespace EFProject
             InitializeComponent();
         }
 
-        private void SupplierForm_Load(object sender, EventArgs e)
-        {
-            EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
-            foreach (Supplier S in Ent.Suppliers)
-            {
-                comboBox1.Items.Add(S.S_ID.ToString());
-            }
-        }
-
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int ID = int.Parse(comboBox1.Text.ToString());
-            EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
-            Supplier Sup = (from S in Ent.Suppliers
-                            where S.S_ID == ID
-                            select S).First();
-            textBox1.Text = Sup.S_ID.ToString();
-            textBox2.Text = Sup.S_Name;
-            textBox3.Text = Sup.S_Email;
-            textBox4.Text = Sup.S_Phone.ToString();
-            textBox5.Text = Sup.S_Mob.ToString();
-            textBox6.Text = Sup.S_Fax.ToString();
-            textBox7.Text = Sup.S_Website;
-        }
 
         private void Button1_Click(object sender, EventArgs e)
         {
@@ -60,7 +36,6 @@ namespace EFProject
                     SP.S_Fax = int.Parse(textBox6.Text);
                     SP.S_Website = textBox7.Text;
                     Ent.Suppliers.Add(SP);
-                    comboBox1.Items.Add(SP.S_ID);
                     Ent.SaveChanges();
                     MessageBox.Show("Supplier added successfully!");
                 }
@@ -110,6 +85,17 @@ namespace EFProject
         {
             EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
             dataGridView1.DataSource = Ent.SelectSupplier();
+        }
+
+        private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["S_ID"].Value.ToString();
+            textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells["S_Name"].Value.ToString();
+            textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["S_Email"].Value.ToString();
+            textBox4.Text = dataGridView1.Rows[e.RowIndex].Cells["S_Phone"].Value.ToString();
+            textBox5.Text = dataGridView1.Rows[e.RowIndex].Cells["S_Mob"].Value.ToString();
+            textBox6.Text = dataGridView1.Rows[e.RowIndex].Cells["S_Fax"].Value.ToString();
+            textBox7.Text = dataGridView1.Rows[e.RowIndex].Cells["S_Website"].Value.ToString();
         }
     }
 }

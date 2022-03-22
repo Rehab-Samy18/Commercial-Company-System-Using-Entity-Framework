@@ -17,11 +17,6 @@ namespace EFProject
             InitializeComponent();
         }
 
-        private void Label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ComboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
             int ID = int.Parse(comboBox5.Text);
@@ -62,7 +57,8 @@ namespace EFProject
         {
             EF_FinalProjectEntities Ent = new EF_FinalProjectEntities();
             Ent.TransactionProc1(int.Parse(comboBox1.Text), comboBox3.Text, comboBox4.Text, int.Parse(comboBox2.Text), int.Parse(textBox3.Text), DateTime.Parse(textBox7.Text), int.Parse(textBox8.Text));
-            MessageBox.Show("تم تحويل الصنف بنجاح");
+            MessageBox.Show("Product has been transacted successfully");
         }
+
     }
 }
