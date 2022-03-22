@@ -61,7 +61,8 @@ namespace EFProject
 
         private void Button8_Click(object sender, EventArgs e)
         {
-
+            TransactionForm TF = new TransactionForm();
+            TF.Show();
         }
     }
 }

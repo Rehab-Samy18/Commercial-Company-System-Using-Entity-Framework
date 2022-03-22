@@ -170,5 +170,80 @@ namespace EFProject
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SelectExchangePermission_Result>("SelectExchangePermission");
         }
+    
+        public virtual int TransactionProc(Nullable<int> pid, string pname, string fromwh, string towh, Nullable<int> sid, Nullable<int> pq, Nullable<System.DateTime> pdate, Nullable<int> expdur)
+        {
+            var pidParameter = pid.HasValue ?
+                new ObjectParameter("pid", pid) :
+                new ObjectParameter("pid", typeof(int));
+    
+            var pnameParameter = pname != null ?
+                new ObjectParameter("pname", pname) :
+                new ObjectParameter("pname", typeof(string));
+    
+            var fromwhParameter = fromwh != null ?
+                new ObjectParameter("fromwh", fromwh) :
+                new ObjectParameter("fromwh", typeof(string));
+    
+            var towhParameter = towh != null ?
+                new ObjectParameter("towh", towh) :
+                new ObjectParameter("towh", typeof(string));
+    
+            var sidParameter = sid.HasValue ?
+                new ObjectParameter("sid", sid) :
+                new ObjectParameter("sid", typeof(int));
+    
+            var pqParameter = pq.HasValue ?
+                new ObjectParameter("pq", pq) :
+                new ObjectParameter("pq", typeof(int));
+    
+            var pdateParameter = pdate.HasValue ?
+                new ObjectParameter("pdate", pdate) :
+                new ObjectParameter("pdate", typeof(System.DateTime));
+    
+            var expdurParameter = expdur.HasValue ?
+                new ObjectParameter("expdur", expdur) :
+                new ObjectParameter("expdur", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TransactionProc", pidParameter, pnameParameter, fromwhParameter, towhParameter, sidParameter, pqParameter, pdateParameter, expdurParameter);
+        }
+    
+        public virtual int TransactionProc1(Nullable<int> pid, string fromwh, string towh, Nullable<int> sid, Nullable<int> pq, Nullable<System.DateTime> pdate, Nullable<int> expdur)
+        {
+            var pidParameter = pid.HasValue ?
+                new ObjectParameter("pid", pid) :
+                new ObjectParameter("pid", typeof(int));
+    
+            var fromwhParameter = fromwh != null ?
+                new ObjectParameter("fromwh", fromwh) :
+                new ObjectParameter("fromwh", typeof(string));
+    
+            var towhParameter = towh != null ?
+                new ObjectParameter("towh", towh) :
+                new ObjectParameter("towh", typeof(string));
+    
+            var sidParameter = sid.HasValue ?
+                new ObjectParameter("sid", sid) :
+                new ObjectParameter("sid", typeof(int));
+    
+            var pqParameter = pq.HasValue ?
+                new ObjectParameter("pq", pq) :
+                new ObjectParameter("pq", typeof(int));
+    
+            var pdateParameter = pdate.HasValue ?
+                new ObjectParameter("pdate", pdate) :
+                new ObjectParameter("pdate", typeof(System.DateTime));
+    
+            var expdurParameter = expdur.HasValue ?
+                new ObjectParameter("expdur", expdur) :
+                new ObjectParameter("expdur", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TransactionProc1", pidParameter, fromwhParameter, towhParameter, sidParameter, pqParameter, pdateParameter, expdurParameter);
+        }
+    
+        public virtual ObjectResult<DisplayTransaction_Result> DisplayTransaction()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DisplayTransaction_Result>("DisplayTransaction");
+        }
     }
 }
