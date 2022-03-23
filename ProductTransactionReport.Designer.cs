@@ -37,7 +37,7 @@
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Remote;
             this.reportViewer1.ServerReport.BearerToken = null;
-            this.reportViewer1.ServerReport.ReportPath = "/ProjectReports/Report5";
+            this.reportViewer1.ServerReport.ReportPath = "/ProjectReports/Report6";
             this.reportViewer1.Size = new System.Drawing.Size(733, 385);
             this.reportViewer1.TabIndex = 0;
             // 

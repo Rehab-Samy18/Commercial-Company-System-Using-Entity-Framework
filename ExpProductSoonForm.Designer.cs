@@ -37,7 +37,7 @@
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Remote;
             this.reportViewer1.ServerReport.BearerToken = null;
-            this.reportViewer1.ServerReport.ReportPath = "/ProjectReports/Report4";
+            this.reportViewer1.ServerReport.ReportPath = "/ProjectReports/Report7";
             this.reportViewer1.Size = new System.Drawing.Size(769, 398);
             this.reportViewer1.TabIndex = 0;
             // 
@@ -45,7 +45,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::EFProject.Properties.Resources.bg;
+            this.BackgroundImage = global::EFProject.Properties.Resources._1;
             this.ClientSize = new System.Drawing.Size(900, 460);
             this.Controls.Add(this.reportViewer1);
             this.Name = "ExpProductSoonForm";

@@ -83,6 +83,9 @@
     <Compile Include="ClientForm.Designer.cs">
       <DependentUpon>ClientForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DisplayNewTransaction_Result.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DisplayTransaction_Result.cs">
       <DependentUpon>EFModel.tt</DependentUpon>
     </Compile>
@@ -130,6 +133,12 @@
     </Compile>
     <Compile Include="LongTimeProductForm.Designer.cs">
       <DependentUpon>LongTimeProductForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewTransactionProc_Result.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NewTransact_Result.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>EFModel.tt</DependentUpon>
@@ -220,6 +229,9 @@
     </Compile>
     <Compile Include="TransactionForm.Designer.cs">
       <DependentUpon>TransactionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TransactProduct.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Warehouse.cs">
       <DependentUpon>EFModel.tt</DependentUpon>

@@ -37,6 +37,7 @@ namespace EFProject
         public virtual DbSet<Supply_Quantity> Supply_Quantity { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
+        public virtual DbSet<TransactProduct> TransactProducts { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -249,6 +250,53 @@ namespace EFProject
         public virtual ObjectResult<SelectAllProduct_Result> SelectAllProduct()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SelectAllProduct_Result>("SelectAllProduct");
+        }
+    
+        public virtual ObjectResult<NewTransact_Result> NewTransact(Nullable<System.DateTime> date1, Nullable<System.DateTime> date2)
+        {
+            var date1Parameter = date1.HasValue ?
+                new ObjectParameter("date1", date1) :
+                new ObjectParameter("date1", typeof(System.DateTime));
+    
+            var date2Parameter = date2.HasValue ?
+                new ObjectParameter("date2", date2) :
+                new ObjectParameter("date2", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<NewTransact_Result>("NewTransact", date1Parameter, date2Parameter);
+        }
+    
+        public virtual ObjectResult<NewTransactionProc_Result> NewTransactionProc(string fromwh, string towh, Nullable<int> pid, Nullable<int> pq, Nullable<int> sid, Nullable<System.DateTime> tdate)
+        {
+            var fromwhParameter = fromwh != null ?
+                new ObjectParameter("fromwh", fromwh) :
+                new ObjectParameter("fromwh", typeof(string));
+    
+            var towhParameter = towh != null ?
+                new ObjectParameter("towh", towh) :
+                new ObjectParameter("towh", typeof(string));
+    
+            var pidParameter = pid.HasValue ?
+                new ObjectParameter("pid", pid) :
+                new ObjectParameter("pid", typeof(int));
+    
+            var pqParameter = pq.HasValue ?
+                new ObjectParameter("pq", pq) :
+                new ObjectParameter("pq", typeof(int));
+    
+            var sidParameter = sid.HasValue ?
+                new ObjectParameter("sid", sid) :
+                new ObjectParameter("sid", typeof(int));
+    
+            var tdateParameter = tdate.HasValue ?
+                new ObjectParameter("tdate", tdate) :
+                new ObjectParameter("tdate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<NewTransactionProc_Result>("NewTransactionProc", fromwhParameter, towhParameter, pidParameter, pqParameter, sidParameter, tdateParameter);
+        }
+    
+        public virtual ObjectResult<DisplayNewTransaction_Result> DisplayNewTransaction()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DisplayNewTransaction_Result>("DisplayNewTransaction");
         }
     }
 }

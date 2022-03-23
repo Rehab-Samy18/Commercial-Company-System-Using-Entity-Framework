@@ -18,6 +18,7 @@ namespace EFProject
         public Supplier()
         {
             this.Supply_Permission = new HashSet<Supply_Permission>();
+            this.TransactProducts = new HashSet<TransactProduct>();
         }
     
         public int S_ID { get; set; }
@@ -30,5 +31,7 @@ namespace EFProject
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supply_Permission> Supply_Permission { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TransactProduct> TransactProducts { get; set; }
     }
 }

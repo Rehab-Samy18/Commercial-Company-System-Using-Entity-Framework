@@ -19,6 +19,8 @@ namespace EFProject
         {
             this.Exchange_Permission = new HashSet<Exchange_Permission>();
             this.Supply_Permission = new HashSet<Supply_Permission>();
+            this.TransactProducts = new HashSet<TransactProduct>();
+            this.TransactProducts1 = new HashSet<TransactProduct>();
         }
     
         public string WH_Name { get; set; }
@@ -29,5 +31,9 @@ namespace EFProject
         public virtual ICollection<Exchange_Permission> Exchange_Permission { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supply_Permission> Supply_Permission { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TransactProduct> TransactProducts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TransactProduct> TransactProducts1 { get; set; }
     }
 }

@@ -26,6 +26,11 @@
         <AssociationConnector Association="EF_FinalProjectModel.c4" ManuallyRouted="false" />
         <AssociationConnector Association="EF_FinalProjectModel.c5" ManuallyRouted="false" />
         <AssociationConnector Association="EF_FinalProjectModel.c9" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EF_FinalProjectModel.TransactProduct" Width="1.5" PointX="6" PointY="1.5" />
+        <AssociationConnector Association="EF_FinalProjectModel.FK_TransactProduct_Product" />
+        <AssociationConnector Association="EF_FinalProjectModel.FK_TransactProduct_Supplier" />
+        <AssociationConnector Association="EF_FinalProjectModel.FK_TransactProduct_Warehouse" />
+        <AssociationConnector Association="EF_FinalProjectModel.FK_TransactProduct_Warehouse1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

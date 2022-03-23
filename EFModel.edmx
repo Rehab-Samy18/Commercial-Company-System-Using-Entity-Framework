@@ -109,6 +109,18 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <Property Name="Prod_Date" Type="date" />
           <Property Name="Exp_Duration" Type="int" />
         </EntityType>-->
+        <EntityType Name="TransactProduct">
+          <Key>
+            <PropertyRef Name="TransactID" />
+          </Key>
+          <Property Name="TransactID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FromWH" Type="varchar" MaxLength="20" />
+          <Property Name="ToWH" Type="varchar" MaxLength="20" />
+          <Property Name="Prod_ID" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="S_ID" Type="int" />
+          <Property Name="Transaction_Date" Type="date" />
+        </EntityType>
         <EntityType Name="Warehouse">
           <Key>
             <PropertyRef Name="WH_Name" />
@@ -253,8 +265,69 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TransactProduct_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="TransactProduct" Type="Self.TransactProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="TransactProduct">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactProduct_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="TransactProduct" Type="Self.TransactProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="S_ID" />
+            </Principal>
+            <Dependent Role="TransactProduct">
+              <PropertyRef Name="S_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactProduct_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="TransactProduct" Type="Self.TransactProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="TransactProduct">
+              <PropertyRef Name="ToWH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactProduct_Warehouse1">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="TransactProduct" Type="Self.TransactProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="TransactProduct">
+              <PropertyRef Name="ToWH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DisplayNewTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="DisplayTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="NewTransact" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="date1" Type="date" Mode="In" />
+          <Parameter Name="date2" Type="date" Mode="In" />
+        </Function>
+        <Function Name="NewTransactionProc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fromwh" Type="varchar" Mode="In" />
+          <Parameter Name="towh" Type="varchar" Mode="In" />
+          <Parameter Name="pid" Type="int" Mode="In" />
+          <Parameter Name="pq" Type="int" Mode="In" />
+          <Parameter Name="sid" Type="int" Mode="In" />
+          <Parameter Name="tdate" Type="date" Mode="In" />
+        </Function>
         <Function Name="SelectAllProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SelectClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SelectExchangePermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -311,6 +384,7 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <EntitySet Name="Supply_Permission" EntityType="Self.Supply_Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supply_Quantity" EntityType="Self.Supply_Quantity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactProduct" EntityType="Self.TransactProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="c1" Association="Self.c1">
             <End Role="Product" EntitySet="Product" />
@@ -355,6 +429,22 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <AssociationSet Name="c9" Association="Self.c9">
             <End Role="Supply_Permission" EntitySet="Supply_Permission" />
             <End Role="Supply_Quantity" EntitySet="Supply_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactProduct_Product" Association="Self.FK_TransactProduct_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="TransactProduct" EntitySet="TransactProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactProduct_Supplier" Association="Self.FK_TransactProduct_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="TransactProduct" EntitySet="TransactProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactProduct_Warehouse" Association="Self.FK_TransactProduct_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="TransactProduct" EntitySet="TransactProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactProduct_Warehouse1" Association="Self.FK_TransactProduct_Warehouse1">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="TransactProduct" EntitySet="TransactProduct" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -412,6 +502,7 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <NavigationProperty Name="Product_Measure" Relationship="Self.c1" FromRole="Product" ToRole="Product_Measure" />
           <NavigationProperty Name="Supply_Quantity" Relationship="Self.c10" FromRole="Product" ToRole="Supply_Quantity" />
           <NavigationProperty Name="Supply_Permission" Relationship="Self.c3" FromRole="Product" ToRole="Supply_Permission" />
+          <NavigationProperty Name="TransactProducts" Relationship="EF_FinalProjectModel.FK_TransactProduct_Product" FromRole="Product" ToRole="TransactProduct" />
         </EntityType>
         <EntityType Name="Product_Measure">
           <Key>
@@ -434,6 +525,7 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <Property Name="S_Fax" Type="Int32" />
           <Property Name="S_Website" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Supply_Permission" Relationship="Self.c4" FromRole="Supplier" ToRole="Supply_Permission" />
+          <NavigationProperty Name="TransactProducts" Relationship="EF_FinalProjectModel.FK_TransactProduct_Supplier" FromRole="Supplier" ToRole="TransactProduct" />
         </EntityType>
         <EntityType Name="Supply_Permission">
           <Key>
@@ -483,6 +575,8 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <Property Name="WH_Manager" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Exchange_Permission" Relationship="Self.c14" FromRole="Warehouse" ToRole="Exchange_Permission" />
           <NavigationProperty Name="Supply_Permission" Relationship="Self.c5" FromRole="Warehouse" ToRole="Supply_Permission" />
+          <NavigationProperty Name="TransactProducts" Relationship="EF_FinalProjectModel.FK_TransactProduct_Warehouse" FromRole="Warehouse" ToRole="TransactProduct" />
+          <NavigationProperty Name="TransactProducts1" Relationship="EF_FinalProjectModel.FK_TransactProduct_Warehouse1" FromRole="Warehouse" ToRole="TransactProduct" />
         </EntityType>
         <Association Name="c13">
           <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
@@ -732,6 +826,36 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           </FunctionImport>
           <FunctionImport Name="DisplayTransaction" ReturnType="Collection(EF_FinalProjectModel.DisplayTransaction_Result)" />
           <FunctionImport Name="SelectAllProduct" ReturnType="Collection(EF_FinalProjectModel.SelectAllProduct_Result)" />
+          <EntitySet Name="TransactProducts" EntityType="EF_FinalProjectModel.TransactProduct" />
+          <AssociationSet Name="FK_TransactProduct_Product" Association="EF_FinalProjectModel.FK_TransactProduct_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="TransactProduct" EntitySet="TransactProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactProduct_Supplier" Association="EF_FinalProjectModel.FK_TransactProduct_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="TransactProduct" EntitySet="TransactProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactProduct_Warehouse" Association="EF_FinalProjectModel.FK_TransactProduct_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="TransactProduct" EntitySet="TransactProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactProduct_Warehouse1" Association="EF_FinalProjectModel.FK_TransactProduct_Warehouse1">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="TransactProduct" EntitySet="TransactProducts" />
+          </AssociationSet>
+          <FunctionImport Name="NewTransact" ReturnType="Collection(EF_FinalProjectModel.NewTransact_Result)">
+            <Parameter Name="date1" Mode="In" Type="DateTime" />
+            <Parameter Name="date2" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="NewTransactionProc" ReturnType="Collection(EF_FinalProjectModel.NewTransactionProc_Result)">
+            <Parameter Name="fromwh" Mode="In" Type="String" />
+            <Parameter Name="towh" Mode="In" Type="String" />
+            <Parameter Name="pid" Mode="In" Type="Int32" />
+            <Parameter Name="pq" Mode="In" Type="Int32" />
+            <Parameter Name="sid" Mode="In" Type="Int32" />
+            <Parameter Name="tdate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="DisplayNewTransaction" ReturnType="Collection(EF_FinalProjectModel.DisplayNewTransaction_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -802,6 +926,101 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <Property Type="Int32" Name="Prod_ID" Nullable="false" />
           <Property Type="String" Name="Prod_Name" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="Measure_Unit" Nullable="false" MaxLength="5" />
+        </ComplexType>
+        <EntityType Name="TransactProduct">
+          <Key>
+            <PropertyRef Name="TransactID" />
+          </Key>
+          <Property Name="TransactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromWH" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ToWH" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Prod_ID" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="S_ID" Type="Int32" />
+          <Property Name="Transaction_Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Product" Relationship="EF_FinalProjectModel.FK_TransactProduct_Product" FromRole="TransactProduct" ToRole="Product" />
+          <NavigationProperty Name="Supplier" Relationship="EF_FinalProjectModel.FK_TransactProduct_Supplier" FromRole="TransactProduct" ToRole="Supplier" />
+          <NavigationProperty Name="Warehouse" Relationship="EF_FinalProjectModel.FK_TransactProduct_Warehouse" FromRole="TransactProduct" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouse1" Relationship="EF_FinalProjectModel.FK_TransactProduct_Warehouse1" FromRole="TransactProduct" ToRole="Warehouse" />
+        </EntityType>
+        <Association Name="FK_TransactProduct_Product">
+          <End Type="EF_FinalProjectModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="EF_FinalProjectModel.TransactProduct" Role="TransactProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Prod_ID" />
+            </Principal>
+            <Dependent Role="TransactProduct">
+              <PropertyRef Name="Prod_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactProduct_Supplier">
+          <End Type="EF_FinalProjectModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="EF_FinalProjectModel.TransactProduct" Role="TransactProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="S_ID" />
+            </Principal>
+            <Dependent Role="TransactProduct">
+              <PropertyRef Name="S_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactProduct_Warehouse">
+          <End Type="EF_FinalProjectModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+          <End Type="EF_FinalProjectModel.TransactProduct" Role="TransactProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="TransactProduct">
+              <PropertyRef Name="ToWH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactProduct_Warehouse1">
+          <End Type="EF_FinalProjectModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+          <End Type="EF_FinalProjectModel.TransactProduct" Role="TransactProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="TransactProduct">
+              <PropertyRef Name="ToWH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="NewTransact_Result">
+          <Property Type="Int32" Name="TransactID" Nullable="false" />
+          <Property Type="String" Name="FromWH" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ToWH" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Prod_ID" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="S_ID" Nullable="true" />
+          <Property Type="DateTime" Name="Transaction_Date" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="NewTransactionProc_Result">
+          <Property Type="Int32" Name="TransactID" Nullable="false" />
+          <Property Type="String" Name="FromWH" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ToWH" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Prod_ID" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="S_ID" Nullable="true" />
+          <Property Type="DateTime" Name="Transaction_Date" Nullable="true" />
+          <Property Type="DateTime" Name="Prod_ProdDate" Nullable="true" />
+          <Property Type="Int32" Name="Prod_ExpDuration" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="DisplayNewTransaction_Result">
+          <Property Type="Int32" Name="TransactID" Nullable="false" />
+          <Property Type="String" Name="FromWH" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ToWH" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Prod_ID" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="S_ID" Nullable="true" />
+          <Property Type="DateTime" Name="Transaction_Date" Nullable="true" />
+          <Property Type="DateTime" Name="Prod_ProdDate" Nullable="true" />
+          <Property Type="Int32" Name="Prod_ExpDuration" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1026,6 +1245,62 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
                 <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
                 <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
                 <ScalarProperty Name="Measure_Unit" ColumnName="Measure_Unit" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TransactProducts">
+            <EntityTypeMapping TypeName="EF_FinalProjectModel.TransactProduct">
+              <MappingFragment StoreEntitySet="TransactProduct">
+                <ScalarProperty Name="Transaction_Date" ColumnName="Transaction_Date" />
+                <ScalarProperty Name="S_ID" ColumnName="S_ID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="ToWH" ColumnName="ToWH" />
+                <ScalarProperty Name="FromWH" ColumnName="FromWH" />
+                <ScalarProperty Name="TransactID" ColumnName="TransactID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="NewTransact" FunctionName="EF_FinalProjectModel.Store.NewTransact">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.NewTransact_Result">
+                <ScalarProperty Name="TransactID" ColumnName="TransactID" />
+                <ScalarProperty Name="FromWH" ColumnName="FromWH" />
+                <ScalarProperty Name="ToWH" ColumnName="ToWH" />
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="S_ID" ColumnName="S_ID" />
+                <ScalarProperty Name="Transaction_Date" ColumnName="Transaction_Date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="NewTransactionProc" FunctionName="EF_FinalProjectModel.Store.NewTransactionProc">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.NewTransactionProc_Result">
+                <ScalarProperty Name="TransactID" ColumnName="TransactID" />
+                <ScalarProperty Name="FromWH" ColumnName="FromWH" />
+                <ScalarProperty Name="ToWH" ColumnName="ToWH" />
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="S_ID" ColumnName="S_ID" />
+                <ScalarProperty Name="Transaction_Date" ColumnName="Transaction_Date" />
+                <ScalarProperty Name="Prod_ProdDate" ColumnName="Prod_ProdDate" />
+                <ScalarProperty Name="Prod_ExpDuration" ColumnName="Prod_ExpDuration" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DisplayNewTransaction" FunctionName="EF_FinalProjectModel.Store.DisplayNewTransaction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.DisplayNewTransaction_Result">
+                <ScalarProperty Name="TransactID" ColumnName="TransactID" />
+                <ScalarProperty Name="FromWH" ColumnName="FromWH" />
+                <ScalarProperty Name="ToWH" ColumnName="ToWH" />
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="S_ID" ColumnName="S_ID" />
+                <ScalarProperty Name="Transaction_Date" ColumnName="Transaction_Date" />
+                <ScalarProperty Name="Prod_ProdDate" ColumnName="Prod_ProdDate" />
+                <ScalarProperty Name="Prod_ExpDuration" ColumnName="Prod_ExpDuration" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
