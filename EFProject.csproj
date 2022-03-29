@@ -134,6 +134,9 @@
     <Compile Include="LongTimeProductForm.Designer.cs">
       <DependentUpon>LongTimeProductForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LongTimeProduct_Result.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="NewTransactionProc_Result.cs">
       <DependentUpon>EFModel.tt</DependentUpon>
     </Compile>
@@ -141,6 +144,9 @@
       <DependentUpon>EFModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductAboutToExpire_Result.cs">
       <DependentUpon>EFModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductForm.cs">

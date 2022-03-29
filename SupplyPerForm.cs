@@ -108,20 +108,17 @@ namespace EFProject
             int UpdatedSupplyPerId = int.Parse(textBox1.Text);
             int UpdatedSupplyPerProductId = int.Parse(comboBox1.Text);
             Supply_Permission SP = Ent.Supply_Permission.Find(UpdatedSupplyPerId,UpdatedSupplyPerProductId);
-            Supply_Quantity SQ = Ent.Supply_Quantity.Find(UpdatedSupplyPerId, UpdatedSupplyPerProductId, int.Parse(textBox3.Text));
 
             if (comboBox1.Text != "" && textBox3.Text != "" && comboBox2.Text != "" && comboBox3.Text != "" && textBox6.Text != "" && textBox7.Text != "" && textBox8.Text != "")
             {
-                if (SP != null && SQ != null)
+                if (SP != null)
                 {
-                    SP.Prod_ID = SQ.Prod_ID = int.Parse(comboBox1.Text);
-                    SQ.Supply_Quantity1 = int.Parse(textBox3.Text);
+                    SP.Prod_ID = int.Parse(comboBox1.Text);
                     SP.S_ID = int.Parse(comboBox2.Text);
                     SP.WH_Name = comboBox3.Text;
                     SP.SP_Date = DateTime.Parse(textBox6.Text);
-                    SQ.Prod_ProdDate = DateTime.Parse(textBox7.Text);
-                    SQ.Prod_ExpDuration = int.Parse(textBox8.Text);
-
+                    int NewQuantity = int.Parse(dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[4].Value.ToString());
+                    Ent.UpdateSupplyQuantityWithDate(int.Parse(textBox1.Text), int.Parse(comboBox1.Text), NewQuantity, int.Parse(textBox3.Text),DateTime.Parse(textBox7.Text),int.Parse(textBox8.Text));
                     Warehouse WH = (from W in Ent.Warehouses
                                     where W.WH_Name == SP.WH_Name
                                     select W).FirstOrDefault();
@@ -147,6 +144,7 @@ namespace EFProject
                     }
                     else
                     {
+                        
                         Ent.SaveChanges();
                         MessageBox.Show("Supply Permission updated successfully!");
                         textBox1.Text = comboBox1.Text = textBox3.Text = comboBox2.Text = comboBox3.Text = textBox6.Text = textBox7.Text = textBox8.Text = String.Empty;

@@ -316,6 +316,9 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
         <Function Name="DisplayNewTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="DisplayTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="LongTimeProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="duration" Type="int" Mode="In" />
+        </Function>
         <Function Name="NewTransact" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="date1" Type="date" Mode="In" />
           <Parameter Name="date2" Type="date" Mode="In" />
@@ -327,6 +330,9 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <Parameter Name="pq" Type="int" Mode="In" />
           <Parameter Name="sid" Type="int" Mode="In" />
           <Parameter Name="tdate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ProductAboutToExpire" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="duration" Type="int" Mode="In" />
         </Function>
         <Function Name="SelectAllProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SelectClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -373,6 +379,31 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <Parameter Name="pq" Type="int" Mode="In" />
           <Parameter Name="pdate" Type="date" Mode="In" />
           <Parameter Name="expdur" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateExchangeQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="exPerID" Type="int" Mode="In" />
+          <Parameter Name="productID" Type="int" Mode="In" />
+          <Parameter Name="oldQ" Type="int" Mode="In" />
+          <Parameter Name="newQ" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateMeasureUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="productID" Type="int" Mode="In" />
+          <Parameter Name="oldUnit" Type="varchar" Mode="In" />
+          <Parameter Name="newUnit" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateSupplyQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="supPerID" Type="int" Mode="In" />
+          <Parameter Name="productID" Type="int" Mode="In" />
+          <Parameter Name="oldQ" Type="int" Mode="In" />
+          <Parameter Name="newQ" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateSupplyQuantityWithDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="supPerID" Type="int" Mode="In" />
+          <Parameter Name="productID" Type="int" Mode="In" />
+          <Parameter Name="oldQ" Type="int" Mode="In" />
+          <Parameter Name="newQ" Type="int" Mode="In" />
+          <Parameter Name="date" Type="date" Mode="In" />
+          <Parameter Name="period" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="EF_FinalProjectModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
@@ -856,6 +887,37 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
             <Parameter Name="tdate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="DisplayNewTransaction" ReturnType="Collection(EF_FinalProjectModel.DisplayNewTransaction_Result)" />
+          <FunctionImport Name="LongTimeProduct" ReturnType="Collection(EF_FinalProjectModel.LongTimeProduct_Result)">
+          <Parameter Name="duration" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProductAboutToExpire" ReturnType="Collection(EF_FinalProjectModel.ProductAboutToExpire_Result)">
+          <Parameter Name="duration" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateMeasureUnit">
+            <Parameter Name="productID" Mode="In" Type="Int32" />
+            <Parameter Name="oldUnit" Mode="In" Type="String" />
+            <Parameter Name="newUnit" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateSupplyQuantity">
+            <Parameter Name="supPerID" Mode="In" Type="Int32" />
+            <Parameter Name="productID" Mode="In" Type="Int32" />
+            <Parameter Name="oldQ" Mode="In" Type="Int32" />
+            <Parameter Name="newQ" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateSupplyQuantityWithDate">
+            <Parameter Name="supPerID" Mode="In" Type="Int32" />
+            <Parameter Name="productID" Mode="In" Type="Int32" />
+            <Parameter Name="oldQ" Mode="In" Type="Int32" />
+            <Parameter Name="newQ" Mode="In" Type="Int32" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
+            <Parameter Name="period" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateExchangeQuantity">
+            <Parameter Name="exPerID" Mode="In" Type="Int32" />
+            <Parameter Name="productID" Mode="In" Type="Int32" />
+            <Parameter Name="oldQ" Mode="In" Type="Int32" />
+            <Parameter Name="newQ" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1019,6 +1081,17 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
           <Property Type="Int32" Name="Quantity" Nullable="true" />
           <Property Type="Int32" Name="S_ID" Nullable="true" />
           <Property Type="DateTime" Name="Transaction_Date" Nullable="true" />
+          <Property Type="DateTime" Name="Prod_ProdDate" Nullable="true" />
+          <Property Type="Int32" Name="Prod_ExpDuration" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="LongTimeProduct_Result">
+          <Property Type="Int32" Name="Prod_ID" Nullable="false" />
+          <Property Type="String" Name="Prod_Name" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="SP_Date" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ProductAboutToExpire_Result">
+          <Property Type="Int32" Name="Prod_ID" Nullable="false" />
+          <Property Type="String" Name="Prod_Name" Nullable="true" MaxLength="20" />
           <Property Type="DateTime" Name="Prod_ProdDate" Nullable="true" />
           <Property Type="Int32" Name="Prod_ExpDuration" Nullable="true" />
         </ComplexType>
@@ -1304,6 +1377,29 @@ warning 6013: The table/view 'EF_FinalProject.dbo.TransactionInfo' does not have
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LongTimeProduct" FunctionName="EF_FinalProjectModel.Store.LongTimeProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.LongTimeProduct_Result">
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
+                <ScalarProperty Name="SP_Date" ColumnName="SP_Date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProductAboutToExpire" FunctionName="EF_FinalProjectModel.Store.ProductAboutToExpire">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EF_FinalProjectModel.ProductAboutToExpire_Result">
+                <ScalarProperty Name="Prod_ID" ColumnName="Prod_ID" />
+                <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
+                <ScalarProperty Name="Prod_ProdDate" ColumnName="Prod_ProdDate" />
+                <ScalarProperty Name="Prod_ExpDuration" ColumnName="Prod_ExpDuration" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateMeasureUnit" FunctionName="EF_FinalProjectModel.Store.UpdateMeasureUnit" />
+          <FunctionImportMapping FunctionImportName="UpdateSupplyQuantity" FunctionName="EF_FinalProjectModel.Store.UpdateSupplyQuantity" />
+          <FunctionImportMapping FunctionImportName="UpdateSupplyQuantityWithDate" FunctionName="EF_FinalProjectModel.Store.UpdateSupplyQuantityWithDate" />
+          <FunctionImportMapping FunctionImportName="UpdateExchangeQuantity" FunctionName="EF_FinalProjectModel.Store.UpdateExchangeQuantity" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

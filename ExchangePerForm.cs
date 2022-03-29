@@ -105,18 +105,17 @@ namespace EFProject
             int UpdatedExchangePerId = int.Parse(textBox1.Text);
             int UpdatedExchangePerProductId = int.Parse(comboBox1.Text);
             Exchange_Permission EP = Ent.Exchange_Permission.Find(UpdatedExchangePerId, UpdatedExchangePerProductId);
-            Exchange_Quantity EQ = Ent.Exchange_Quantity.Find(UpdatedExchangePerId, UpdatedExchangePerProductId, int.Parse(textBox3.Text));
 
             if (comboBox1.Text != "" && textBox3.Text != "" && comboBox2.Text != "" && comboBox3.Text != "" && textBox6.Text != "")
             {
-                if (EP != null && EQ != null)
+                if (EP != null)
                 {
-                    EP.Prod_ID = EQ.Prod_ID = int.Parse(comboBox1.Text);
-                    EQ.Exchange_Quantity1 = int.Parse(textBox3.Text);
+                    EP.Prod_ID = int.Parse(comboBox1.Text);
                     EP.C_ID = int.Parse(comboBox2.Text);
                     EP.WH_Name = comboBox3.Text;
                     EP.EP_Date = DateTime.Parse(textBox6.Text);
-
+                    int NewQuantity = int.Parse(dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[4].Value.ToString());
+                    Ent.UpdateExchangeQuantity(int.Parse(textBox1.Text), int.Parse(comboBox1.Text), NewQuantity, int.Parse(textBox3.Text));
 
                     Warehouse WH = (from W in Ent.Warehouses
                                     where W.WH_Name == EP.WH_Name

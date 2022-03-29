@@ -62,13 +62,13 @@ namespace EFProject
             int UpdatedProductId = int.Parse(textBox1.Text);
             string UpdatedProductMeasure = textBox3.Text;
             Product PR = Ent.Products.Find(UpdatedProductId);
-            Product_Measure PM = Ent.Product_Measure.Find(UpdatedProductId, UpdatedProductMeasure);
             if (textBox2.Text != "" && textBox3.Text != "")
             {
-                if (PR != null && PM != null)
+                if (PR != null)
                 {
                     PR.Prod_Name = textBox2.Text;
-                    PM.Measure_Unit = textBox3.Text;
+                    string NewMeasure = (dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[2].Value).ToString();
+                    Ent.UpdateMeasureUnit(int.Parse(textBox1.Text), NewMeasure, textBox3.Text);
                     Ent.SaveChanges();
                     MessageBox.Show("Product updated successfully!");
                 }

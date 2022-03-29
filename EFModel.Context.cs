@@ -298,5 +298,111 @@ namespace EFProject
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DisplayNewTransaction_Result>("DisplayNewTransaction");
         }
+    
+        public virtual ObjectResult<LongTimeProduct_Result> LongTimeProduct(Nullable<int> duration)
+        {
+            var durationParameter = duration.HasValue ?
+                new ObjectParameter("duration", duration) :
+                new ObjectParameter("duration", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LongTimeProduct_Result>("LongTimeProduct", durationParameter);
+        }
+    
+        public virtual ObjectResult<ProductAboutToExpire_Result> ProductAboutToExpire(Nullable<int> duration)
+        {
+            var durationParameter = duration.HasValue ?
+                new ObjectParameter("duration", duration) :
+                new ObjectParameter("duration", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductAboutToExpire_Result>("ProductAboutToExpire", durationParameter);
+        }
+    
+        public virtual int UpdateMeasureUnit(Nullable<int> productID, string oldUnit, string newUnit)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            var oldUnitParameter = oldUnit != null ?
+                new ObjectParameter("oldUnit", oldUnit) :
+                new ObjectParameter("oldUnit", typeof(string));
+    
+            var newUnitParameter = newUnit != null ?
+                new ObjectParameter("newUnit", newUnit) :
+                new ObjectParameter("newUnit", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateMeasureUnit", productIDParameter, oldUnitParameter, newUnitParameter);
+        }
+    
+        public virtual int UpdateSupplyQuantity(Nullable<int> supPerID, Nullable<int> productID, Nullable<int> oldQ, Nullable<int> newQ)
+        {
+            var supPerIDParameter = supPerID.HasValue ?
+                new ObjectParameter("supPerID", supPerID) :
+                new ObjectParameter("supPerID", typeof(int));
+    
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            var oldQParameter = oldQ.HasValue ?
+                new ObjectParameter("oldQ", oldQ) :
+                new ObjectParameter("oldQ", typeof(int));
+    
+            var newQParameter = newQ.HasValue ?
+                new ObjectParameter("newQ", newQ) :
+                new ObjectParameter("newQ", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateSupplyQuantity", supPerIDParameter, productIDParameter, oldQParameter, newQParameter);
+        }
+    
+        public virtual int UpdateSupplyQuantityWithDate(Nullable<int> supPerID, Nullable<int> productID, Nullable<int> oldQ, Nullable<int> newQ, Nullable<System.DateTime> date, Nullable<int> period)
+        {
+            var supPerIDParameter = supPerID.HasValue ?
+                new ObjectParameter("supPerID", supPerID) :
+                new ObjectParameter("supPerID", typeof(int));
+    
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            var oldQParameter = oldQ.HasValue ?
+                new ObjectParameter("oldQ", oldQ) :
+                new ObjectParameter("oldQ", typeof(int));
+    
+            var newQParameter = newQ.HasValue ?
+                new ObjectParameter("newQ", newQ) :
+                new ObjectParameter("newQ", typeof(int));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("period", period) :
+                new ObjectParameter("period", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateSupplyQuantityWithDate", supPerIDParameter, productIDParameter, oldQParameter, newQParameter, dateParameter, periodParameter);
+        }
+    
+        public virtual int UpdateExchangeQuantity(Nullable<int> exPerID, Nullable<int> productID, Nullable<int> oldQ, Nullable<int> newQ)
+        {
+            var exPerIDParameter = exPerID.HasValue ?
+                new ObjectParameter("exPerID", exPerID) :
+                new ObjectParameter("exPerID", typeof(int));
+    
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            var oldQParameter = oldQ.HasValue ?
+                new ObjectParameter("oldQ", oldQ) :
+                new ObjectParameter("oldQ", typeof(int));
+    
+            var newQParameter = newQ.HasValue ?
+                new ObjectParameter("newQ", newQ) :
+                new ObjectParameter("newQ", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateExchangeQuantity", exPerIDParameter, productIDParameter, oldQParameter, newQParameter);
+        }
     }
 }
